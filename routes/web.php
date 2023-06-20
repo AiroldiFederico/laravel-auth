@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,7 @@ Route::middleware('auth', 'verified')->prefix('admin')->name('admin.')->group(fu
 
     // Rotte per admin
     Route::get('/', [DashboardController::class, 'index'] )->name('dashboard');
+    Route::resource('/projects', ProjectController::class);
 });
 
 require __DIR__.'/auth.php';
