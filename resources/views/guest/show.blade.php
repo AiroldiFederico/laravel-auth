@@ -12,6 +12,7 @@
                 <p class="card-text">Link: <a href="{{ $project->link }}">{{ $project->link }}</a></p>
             @endif
             <p class="card-text">Languages: {{ $project->languages }}</p>
+            <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-primary">Modifica</a>
         </div>
     </div>
 </div>
