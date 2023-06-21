@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Project;
+use Illuminate\Support\Str;
+
+
 
 class ProjectController extends Controller
 {
@@ -17,8 +20,14 @@ class ProjectController extends Controller
     {
         $projects = Project::all();
 
-        return view('admin.projects.index', compact('projects'));
+        return view('guest.index', compact('projects'));
     }
+
+
+
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -27,8 +36,14 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin\Projects\create');
     }
+
+
+
+
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -38,8 +53,31 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form_data = $request->all();
+
+
+
+        // Creazione di un nuovo progetto con i dati validati
+        $project = new Project;
+        $project->title = $form_data['title'];
+        $project->slug = Str::slug($form_data['title']);
+        $project->github = $form_data['github'];
+        $project->link = $form_data['link'];
+        $project->languages = $form_data['languages'];
+        $project->save();
+
+
+
+
+        // Reindirizzamento alla pagina di visualizzazione del progetto appena creato
+        return redirect()->route('projects.index');
+
+
     }
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -52,6 +90,11 @@ class ProjectController extends Controller
         //
     }
 
+
+
+
+
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -62,6 +105,13 @@ class ProjectController extends Controller
     {
         //
     }
+
+
+
+
+
+
+
 
     /**
      * Update the specified resource in storage.
@@ -74,6 +124,12 @@ class ProjectController extends Controller
     {
         //
     }
+
+
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
