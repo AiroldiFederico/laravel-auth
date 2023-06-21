@@ -87,7 +87,9 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        return view('guest.show', compact('project'));
     }
 
 
