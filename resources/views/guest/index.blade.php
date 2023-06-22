@@ -7,10 +7,10 @@
 
     <div class="container mt-5">
         <div class="row">
-            @foreach ($projects as $project)
+            @forelse ($projects as $project)
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="{{ $project->image }}" class="card-img-top" alt="{{ $project->title }}">
+                    <img src="{{ asset('storage/' . $project->image) }}" class="card-img-top" alt="{{ $project->title }}">
                     <div class="card-body">
                         <h5 class="card-title">{{ $project->title }}</h5>
                         <p class="card-text">{{ $project->languages }}</p>
@@ -18,7 +18,9 @@
                     </div>
                 </div>
             </div>
-            @endforeach
+            @empty 
+            <h1>Non ci sono ancora progetti :(</h1>
+            @endforelse
         </div>
     </div>
     

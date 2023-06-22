@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Admin\Project;
 use Illuminate\Support\Str;
 use Spatie\LaravelIgnition\Recorders\DumpRecorder\Dump;
+use Illuminate\Support\Facades\Storage;
+
 
 class ProjectController extends Controller
 {
@@ -50,53 +52,87 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    // public function store(Request $request)
+    // {
 
-        $request->validate(
-            [
-            'title' => 'required|string|max:255',
-            'github' => 'required|string|max:255',
-            'link' => 'required|string|max:255',
-            'languages' => 'required|string|max:255',
-            'image' => 'nullable',
-            ],
-            [
-                'title.required' => 'Il campo titolo è obbligatorio.',
-                'github.required' => 'Il campo GitHub è obbligatorio.',
-                'link.required' => 'Il campo link è obbligatorio.',
-                'languages.required' => 'Il campo lingue è obbligatorio.',
+    //     $request->validate(
+    //         [
+    //         'title' => 'required|string|max:255',
+    //         'github' => 'required|string|max:255',
+    //         'link' => 'required|string|max:255',
+    //         'languages' => 'required|string|max:255',
+    //         'image' => 'nullable',
+    //         ],
+    //         [
+    //             'title.required' => 'Il campo titolo è obbligatorio.',
+    //             'github.required' => 'Il campo GitHub è obbligatorio.',
+    //             'link.required' => 'Il campo link è obbligatorio.',
+    //             'languages.required' => 'Il campo lingue è obbligatorio.',
 
-            ]
-        );
+    //         ]
+    //     );
 
 
 
-        $form_data = $request->all();
-        $slug = Project::generateSlug($request->title); // Genera lo slug corretto
-        $form_data['slug'] = $slug;
+    //     $form_data = $request->all();
+    //     $slug = Project::generateSlug($request->title); // Genera lo slug corretto
+    //     $form_data['slug'] = $slug;
     
-        $new_project = new Project();
-        $new_project->fill($form_data);
-        $new_project->save();
+    //     $new_project = new Project();
+    //     $new_project->fill($form_data);
+    //     $new_project->save();
         
         
-        //dd($form_data);
+    //     //dd($form_data);
 
-        // Creazione di un nuovo progetto con i dati validati
-        //$new_project = new Project();
-        // $project->title = $form_data['title'];
-        // $project->slug = Str::slug($form_data['title'], '-');
-        // $project->github = $form_data['github'];
-        // $project->link = $form_data['link'];
-        // $project->languages = $form_data['languages'];
-        // $new_project->save();
+    //     // Creazione di un nuovo progetto con i dati validati
+    //     //$new_project = new Project();
+    //     // $project->title = $form_data['title'];
+    //     // $project->slug = Str::slug($form_data['title'], '-');
+    //     // $project->github = $form_data['github'];
+    //     // $project->link = $form_data['link'];
+    //     // $project->languages = $form_data['languages'];
+    //     // $new_project->save();
 
-        // Reindirizzamento alla pagina di visualizzazione del progetto appena creato
-        return redirect()->route('projects.index');
+    //     // Reindirizzamento alla pagina di visualizzazione del progetto appena creato
+    //     return redirect()->route('projects.index');
 
 
+    // }
+
+    public function store(Request $request)
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'github' => 'required|string|max:255',
+        'link' => 'required|string|max:255',
+        'languages' => 'required|string|max:255',
+        'image' => 'nullable|image|max:2048', // Aggiunto il controllo per il tipo e la dimensione dell'immagine
+    ], [
+        'title.required' => 'Il campo titolo è obbligatorio.',
+        'github.required' => 'Il campo GitHub è obbligatorio.',
+        'link.required' => 'Il campo link è obbligatorio.',
+        'languages.required' => 'Il campo lingue è obbligatorio.',
+        'image.image' => 'Il campo immagine deve essere un file di immagine.',
+        'image.max' => 'La dimensione massima consentita per l\'immagine è 2 MB.',
+    ]);
+
+    $form_data = $request->all();
+
+    if ($request->hasFile('image')) {
+        $image_path = $request->file('image')->store('public/images'); // Salva l'immagine nella directory 'public/images'
+        $form_data['image'] = $image_path;
     }
+
+    $slug = Project::generateSlug($request->title); // Genera lo slug corretto
+    $form_data['slug'] = $slug;
+
+    $new_project = new Project();
+    $new_project->fill($form_data);
+    $new_project->save();
+
+    return redirect()->route('projects.index');
+}
 
 
 

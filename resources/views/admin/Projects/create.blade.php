@@ -21,8 +21,8 @@
                 
                     {{-- Titolo --}}
                     <div class="mb-3">
-                        <label for="comic-title" class="form-label">Title</label>
-                        <input type="text" name="title" id="comic-title" class="form-control @error('title') is-invalid @enderror" placeholder="Insert the title">
+                        <label for="project-title" class="form-label">Title</label>
+                        <input type="text" name="title" id="project-title" class="form-control @error('title') is-invalid @enderror" placeholder="Insert the title">
                     </div>
                     @error('title')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -30,8 +30,8 @@
                 
                     {{-- GitHub --}}
                     <div class="mb-3">
-                        <label for="comic-github" class="form-label">GitHub</label>
-                        <input type="text" name="github" id="comic-github" class="form-control @error('github') is-invalid @enderror" placeholder="Insert the GitHub link">
+                        <label for="project-github" class="form-label">GitHub</label>
+                        <input type="text" name="github" id="project-github" class="form-control @error('github') is-invalid @enderror" placeholder="Insert the GitHub link">
                     </div>
                     @error('github')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -39,8 +39,8 @@
                 
                     {{-- Link --}}
                     <div class="mb-3">
-                        <label for="comic-link" class="form-label">Link</label>
-                        <input type="text" name="link" id="comic-link" class="form-control @error('link') is-invalid @enderror" placeholder="Insert the project link (optional)">
+                        <label for="project-link" class="form-label">Link</label>
+                        <input type="text" name="link" id="project-link" class="form-control @error('link') is-invalid @enderror" placeholder="Insert the project link (optional)">
                     </div>
                     @error('link')
                     <div class="alert alert-danger">{{ $message }}</div>
@@ -48,14 +48,14 @@
                 
                     {{-- Immagine --}}
                     <div class="mb-3">
-                        <label for="comic-image" class="form-label">Image</label>
-                        <input type="file" name="image" id="comic-image" class="form-control">
+                        <label for="project-image" class="form-label">Image</label>
+                        <input type="file" name="image" id="project-image" class="form-control">
                     </div>
                 
                     {{-- Linguaggi --}}
                     <div class="mb-3">
-                        <label for="comic-languages" class="form-label">Languages</label>
-                        <input type="text" name="languages" id="comic-languages" class="form-control @error('languages') is-invalid @enderror" placeholder="Insert the programming languages">
+                        <label for="project-languages" class="form-label">Languages</label>
+                        <input type="text" name="languages" id="project-languages" class="form-control @error('languages') is-invalid @enderror" placeholder="Insert the programming languages">
                     </div>
                     @error('languages')
                     <div class="alert alert-danger">{{ $message }}</div>
