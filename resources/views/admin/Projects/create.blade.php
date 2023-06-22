@@ -22,20 +22,29 @@
                     {{-- Titolo --}}
                     <div class="mb-3">
                         <label for="comic-title" class="form-label">Title</label>
-                        <input type="text" name="title" id="comic-title" class="form-control" placeholder="Insert the title">
+                        <input type="text" name="title" id="comic-title" class="form-control @error('title') is-invalid @enderror" placeholder="Insert the title">
                     </div>
+                    @error('title')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 
                     {{-- GitHub --}}
                     <div class="mb-3">
                         <label for="comic-github" class="form-label">GitHub</label>
-                        <input type="text" name="github" id="comic-github" class="form-control" placeholder="Insert the GitHub link">
+                        <input type="text" name="github" id="comic-github" class="form-control @error('github') is-invalid @enderror" placeholder="Insert the GitHub link">
                     </div>
+                    @error('github')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 
                     {{-- Link --}}
                     <div class="mb-3">
                         <label for="comic-link" class="form-label">Link</label>
-                        <input type="text" name="link" id="comic-link" class="form-control" placeholder="Insert the project link (optional)">
+                        <input type="text" name="link" id="comic-link" class="form-control @error('link') is-invalid @enderror" placeholder="Insert the project link (optional)">
                     </div>
+                    @error('link')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 
                     {{-- Immagine --}}
                     <div class="mb-3">
@@ -46,8 +55,11 @@
                     {{-- Linguaggi --}}
                     <div class="mb-3">
                         <label for="comic-languages" class="form-label">Languages</label>
-                        <input type="text" name="languages" id="comic-languages" class="form-control" placeholder="Insert the programming languages">
+                        <input type="text" name="languages" id="comic-languages" class="form-control @error('languages') is-invalid @enderror" placeholder="Insert the programming languages">
                     </div>
+                    @error('languages')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                 
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary">Create Project</button>

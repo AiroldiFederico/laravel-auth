@@ -53,20 +53,39 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+
+        $request->validate(
+            [
+            'title' => 'required|string|max:255',
+            'github' => 'required|string|max:255',
+            'link' => 'required|string|max:255',
+            'languages' => 'required|string|max:255',
+            'image' => 'nullable',
+            ],
+            [
+                'title.required' => 'Il campo titolo è obbligatorio.',
+                'github.required' => 'Il campo GitHub è obbligatorio.',
+                'link.required' => 'Il campo link è obbligatorio.',
+                'languages.required' => 'Il campo lingue è obbligatorio.',
+
+            ]
+        );
+
+
+
         $form_data = $request->all();
 
-
-
+        
         // Creazione di un nuovo progetto con i dati validati
         $project = new Project;
         $project->title = $form_data['title'];
-        $project->slug = Str::slug($form_data['title']);
+        $project->slug = Str::slug($form_data['title'], '-');
         $project->github = $form_data['github'];
         $project->link = $form_data['link'];
         $project->languages = $form_data['languages'];
         $project->save();
-
-
+        
+        //$slug = Project::generateSlug($request->title);
 
 
         // Reindirizzamento alla pagina di visualizzazione del progetto appena creato
