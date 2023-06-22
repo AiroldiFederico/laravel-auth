@@ -12,7 +12,22 @@
                 <p class="card-text">Link: <a href="{{ $project->link }}">{{ $project->link }}</a></p>
             @endif
             <p class="card-text">Languages: {{ $project->languages }}</p>
-            <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-primary">Modifica</a>
+
+            <div class="mt-2 d-flex justify-content-start gap-2">
+                {{-- Edit button --}}
+                <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning col-2">Modifica</a>
+                {{-- Delete button --}}
+                <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST" class="col-2">
+                    @csrf
+                    @method('DELETE')
+                    
+                    <button class="btn btn-danger col-12" role="button" onclick="return deleteConfirm()">Delete</button>
+                </form>
+            </div>
+            
+            
+            
+            
         </div>
     </div>
 </div>

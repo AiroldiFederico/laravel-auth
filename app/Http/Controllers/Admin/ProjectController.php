@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin\Project;
 use Illuminate\Support\Str;
-
-
+use Spatie\LaravelIgnition\Recorders\DumpRecorder\Dump;
 
 class ProjectController extends Controller
 {
@@ -74,19 +73,24 @@ class ProjectController extends Controller
 
 
         $form_data = $request->all();
-
+        $slug = Project::generateSlug($request->title); // Genera lo slug corretto
+        $form_data['slug'] = $slug;
+    
+        $new_project = new Project();
+        $new_project->fill($form_data);
+        $new_project->save();
         
+        
+        //dd($form_data);
+
         // Creazione di un nuovo progetto con i dati validati
-        $project = new Project;
-        $project->title = $form_data['title'];
-        $project->slug = Str::slug($form_data['title'], '-');
-        $project->github = $form_data['github'];
-        $project->link = $form_data['link'];
-        $project->languages = $form_data['languages'];
-        $project->save();
-        
-        //$slug = Project::generateSlug($request->title);
-
+        //$new_project = new Project();
+        // $project->title = $form_data['title'];
+        // $project->slug = Str::slug($form_data['title'], '-');
+        // $project->github = $form_data['github'];
+        // $project->link = $form_data['link'];
+        // $project->languages = $form_data['languages'];
+        // $new_project->save();
 
         // Reindirizzamento alla pagina di visualizzazione del progetto appena creato
         return redirect()->route('projects.index');
@@ -167,8 +171,11 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Project $project)
     {
-        //
+        $project->delete();
+    
+        return redirect()->route('projects.index')->with('success', 'Il progetto è stato eliminato con successo.');
     }
+    
 }

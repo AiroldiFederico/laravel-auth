@@ -55,14 +55,14 @@ Route::middleware('auth', 'verified')->prefix('admin')->name('admin.')->group(fu
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Rotte per admin CRUD card project
-    Route::resource('/projects', ProjectController::class);
+    Route::resource('/projects', ProjectController::class)->except(['destroy']);
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
     Route::get('/projects/create', [ProjectController::class, 'create'])->name('projects.create');
     Route::post('/projects/store', [ProjectController::class, 'store'])->name('admin.projects.store');
 
     Route::get('/projects/{project}/edit', [ProjectController::class, 'edit'])->name('projects.edit');
     Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
-
 
 });
 
